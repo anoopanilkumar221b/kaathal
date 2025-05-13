@@ -9,10 +9,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'your-local-dev-secret-key')
 
 # Turn off debug mode in production!
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # Allow all hosts in development; restrict in production
-ALLOWED_HOSTS = ['.onrender.com']  # Replace with your Heroku app URL in production
+ALLOWED_HOSTS = ['kaathal.onrender.com']  # Replace with your Heroku app URL in production
 
 # Application definition
 INSTALLED_APPS = [
@@ -116,3 +116,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'owvq fnle rvxp ofdv
 import os
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+}
