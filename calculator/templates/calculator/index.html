@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Calculator</title>
+    <style>
+        /* Background styling */
+        body {
+            background-image: url("{% static 'images/aiswaryaanoop.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container to center the form */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            backdrop-filter: blur(4px); /* Soft blur on background */
+        }
+
+        /* Form styling */
+        .form-box {
+            background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        label {
+            font-size: 1rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff4d88;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff1a66;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <h1>❤️ Love Calculator ❤️</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <label>Your Name:</label><br>
+                <input type="text" name="your_name" autocomplete="off" required><br>
+
+                <label>Crush's Name:</label><br>
+                <input type="text" name="crush_name" autocomplete="off" required><br>
+
+                <button type="submit">Calculate Love %</button>
+            </form>
+
+            {% if result %}
+                <div class="result">
+                    <h2>Result: {{ result }}% compatibility 💘</h2>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
