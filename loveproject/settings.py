@@ -2,19 +2,25 @@ import os
 from pathlib import Path
 import dj_database_url
 
-# BASE_DIR points to your project root
+# --------------------------
+# BASE DIRECTORY
+# --------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# --------------------------
+# SECRET KEY & DEBUG
+# --------------------------
 SECRET_KEY = os.environ.get('SECRET_KEY', 'your-local-dev-secret-key')
-
-# Turn off debug mode in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# Allow all hosts in development; restrict in production
-ALLOWED_HOSTS = ['kaathal.onrender.com']  # Replace with your Heroku app URL in production
+# --------------------------
+# ALLOWED HOSTS
+# --------------------------
+ALLOWED_HOSTS = ['kaathal.onrender.com', 'localhost', '127.0.0.1']
 
-# Application definition
+# --------------------------
+# INSTALLED APPS
+# --------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,12 +28,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'calculator',  # your app
+    'calculator',  # your Django app
 ]
 
+# --------------------------
+# MIDDLEWARE
+# --------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Enables static files on Heroku
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Static file support
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -36,12 +45,19 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# --------------------------
+# URLS & WSGI
+# --------------------------
 ROOT_URLCONF = 'loveproject.urls'
+WSGI_APPLICATION = 'loveproject.wsgi.application'
 
+# --------------------------
+# TEMPLATES
+# --------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'calculator' / 'templates'],  # Your HTML templates
+        'DIRS': [BASE_DIR / 'calculator' / 'templates'],  # HTML templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -54,24 +70,15 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'loveproject.wsgi.application'
-
 # --------------------------
 # DATABASE CONFIGURATION
 # --------------------------
-if os.environ.get("DATABASE_URL"):
-    # Production: PostgreSQL (Heroku)
-    DATABASES = {
-        'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
-    }
-else:
-    # Development: SQLite
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+DATABASES = {
+    'default': dj_database_url.config(
+        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+        conn_max_age=600
+    )
+}
 
 # --------------------------
 # PASSWORD VALIDATION
@@ -100,23 +107,16 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # --------------------------
-# DEFAULT PRIMARY KEY FIELD TYPE
+# DEFAULT AUTO FIELD
 # --------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # --------------------------
-# EMAIL CONFIG (optional)
+# EMAIL CONFIGURATION (Optional)
 # --------------------------
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'anoopanilkumarmararikulam@gmail.com')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'owvq fnle rvxp ofdv')  # Replace in production
-import os
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-import dj_database_url
-DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
-}
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
