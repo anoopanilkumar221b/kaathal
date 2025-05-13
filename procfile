@@ -1,1 +1,1 @@
-web: gunicorn kaathal.wsgi
+web: gunicorn loveproject.wsgi
