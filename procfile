@@ -1,1 +1,1 @@
-web: gunicorn loveproject.wsgi
+web: gunicorn loveproject.wsgi:application
