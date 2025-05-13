@@ -16,7 +16,7 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 # --------------------------
 # ALLOWED HOSTS
 # --------------------------
-ALLOWED_HOSTS = ['kaathal.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['kaathal-3.onrender.com', 'localhost', '127.0.0.1']
 
 # --------------------------
 # INSTALLED APPS
